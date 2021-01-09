@@ -6,7 +6,6 @@ const gravatar = require(`gravatar`)
 const jwt = require(`jsonwebtoken`)
 const config = require(`config`)
 const { check, validationResult } = require('express-validator');
-const e = require("express");
 router.post("/", [
     check("name", `Name is required`).not().isEmpty(),
     check("email", `Please enter valid email `).isEmail(),
@@ -22,8 +21,9 @@ router.post("/", [
         //  get user gravatar
         //password encryption
         // Return json web token
-        let user = User.findOne({ email })
-        console.log(`user`, user);
+        console.log(`req `, req.body);
+        let user = await User.findOne({ email })
+        console.log(`user`, User);
         if (user) {
             return res.status(400).json({ errors: [{ msg: `user already exists` }] })
         }
